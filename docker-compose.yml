@@ -9,16 +9,16 @@ services:
       - ./www:/var/www/html
       - ./tmp:/tmp
       - ./conf/000-default.conf:/etc/apache2/sites-available/000-default.conf
-      - ./conf/php.ini:/etc/php/7.2/apache2/php.ini
+      - ./conf/php.ini:/etc/php/7.2/fpm/php.ini
     ports:
       - 80:80
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: always
     networks:
-      - docker-env_service-net
+      - docker-env_net-service
 
 networks:
-  docker-env_service-net:
+  docker-env_net-service:
     external: true
   

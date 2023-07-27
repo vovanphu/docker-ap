@@ -19,6 +19,7 @@ RUN apt install -y \
     unzip \
     apache2 \
     php7.2 \
+    php7.2-fpm \
     libapache2-mod-php7.2 \
     php7.2-common \
     php7.2-sqlite3 \
@@ -37,7 +38,8 @@ RUN apt install -y \
     php7.2-bcmath \
     php7.2-xdebug
 
-RUN a2enmod rewrite expires
+RUN a2enmod rewrite expires proxy_fcgi setenvif
+RUN a2enconf php7.2-fpm
 
 # Download, extract, and install ionCube Loader
 WORKDIR /tmp
@@ -54,4 +56,4 @@ EXPOSE 80
 VOLUME /var/www/html
 
 # Start Apache2 and MySQL services using the CMD instruction
-CMD service apache2 start && tail -f /var/log/apache2/access.log
+CMD service php7.2-fpm start && service apache2 start && tail -f /var/log/apache2/access.log
